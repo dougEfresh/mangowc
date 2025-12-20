@@ -28,6 +28,9 @@
 #include <wlr/backend/wayland.h>
 #include <wlr/interfaces/wlr_keyboard.h>
 #include <wlr/render/allocator.h>
+#ifdef HAVE_SYSTEMD
+#include <systemd/sd-daemon.h>
+#endif
 #include <wlr/render/wlr_renderer.h>
 #include <wlr/types/wlr_alpha_modifier_v1.h>
 #include <wlr/types/wlr_compositor.h>
@@ -4473,6 +4476,10 @@ run(char *startup_cmd) {
 	 * compositor. Starting the backend rigged up all of the necessary event
 	 * loop configuration to listen to libinput events, DRM events, generate
 	 * frame events at the refresh rate, and so on. */
+
+#ifdef HAVE_SYSTEMD
+	sd_notify(0, "READY=1");
+#endif
 
 	wl_display_run(dpy);
 }

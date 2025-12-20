@@ -39,6 +39,7 @@ libinput_dep = dependency('libinput',version: '>=1.27.1')
 libwayland_client_dep = dependency('wayland-client')
 pcre2_dep = dependency('libpcre2-8')
 libscenefx_dep = dependency('scenefx-0.4',version: '>=0.4.1')
+libsystemd_dep = dependency('libsystemd', required: false)
 
 
 # 获取版本信息
@@ -88,6 +89,10 @@ if xcb.found() and xlibs.found()
   c_args += '-DXWAYLAND'
 endif
 
+if libsystemd_dep.found()
+  c_args += '-DHAVE_SYSTEMD'
+endif
+
 # 链接参数（根据 debug 状态添加 ASAN）
 link_args = []
 if get_option('asan')
@@ -110,6 +115,7 @@ executable('mango',
     libinput_dep,
     libwayland_client_dep,
     pcre2_dep,
+    libsystemd_dep,
   ],
   install : true,
   c_args : c_args,
