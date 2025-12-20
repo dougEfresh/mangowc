@@ -1,0 +1,9 @@
+[Unit]
+Description=Watch mango config directory for %I
+
+[Path]
+PathChanged=%I
+Unit=mango-config-reload@.service
+
+[Install]
+WantedBy=mango.service

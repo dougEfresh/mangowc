@@ -1,0 +1,15 @@
+[Unit]
+Description=Mango is as lightweight as dwl, and can be built completely within a few seconds. Despite this, Mango does not compromise on functionality.
+BindsTo=graphical-session.target
+Before=graphical-session.target
+Wants=graphical-session-pre.target
+After=graphical-session-pre.target
+
+Wants=xdg-desktop-autostart.target
+Before=xdg-desktop-autostart.target
+
+[Service]
+Slice=session.slice
+Type=notify
+ExecStart=/usr/bin/mango
+ExecReload=/usr/bin/mmsg -d reload_config

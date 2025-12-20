@@ -121,7 +121,7 @@ dwl_ipc_protocol = 'protocols/dwl-ipc-unstable-v2.xml'
 
 wayland_scanner_client_header = generator(
   wayland_scanner,
-  output: '@BASENAME@-protocol.h', 
+  output: '@BASENAME@-protocol.h',
   arguments: ['client-header', '@INPUT@', '@OUTPUT@']
 )
 
@@ -147,5 +147,11 @@ executable('mmsg',
 )
 
 desktop_install_dir = join_paths(prefix, 'share/wayland-sessions')
-install_data('mango.desktop', install_dir : desktop_install_dir)
+systemd_install_dir = join_paths(prefix, 'lib/systemd/user')
+install_data('resources/mango.desktop', install_dir : desktop_install_dir)
+install_data('resources/mango.service', install_dir : systemd_install_dir)
+install_data('resources/mango-shutdown.target', install_dir : systemd_install_dir)
+install_data('resources/mango-config-reload.service', install_dir : systemd_install_dir)
+install_data('resources/mango-config-reload@.path', install_dir : systemd_install_dir)
+install_data('resources/mango-session', install_dir : join_path(prefix, 'bin', install_mode: 'rwxr-xr-x')
 install_data('config.conf', install_dir : join_paths(sysconfdir, 'mango'))
